@@ -10,60 +10,204 @@
             background-color: #f4f4f4;
             color: #333;
         }
-        h1, h2 {
+
+        h1 {
             color: #005f99;
         }
-        .project, .snippet {
+
+        details {
             background-color: white;
-            padding: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            padding: 15px;
             border-left: 4px solid #005f99;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
+
+        summary {
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .section-title {
+            margin-top: 40px;
+            color: #00334d;
+            border-bottom: 2px solid #005f99;
+            padding-bottom: 5px;
+        }
+
+        .code-block {
+            position: relative;
+            margin-top: 10px;
+        }
+
         pre {
             background-color: #272822;
             color: #f8f8f2;
             padding: 10px;
             overflow-x: auto;
         }
+
         code {
             font-family: Consolas, monospace;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background-color: #005f99;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .copy-button:active {
+            background-color: #004166;
         }
     </style>
 </head>
 <body>
 
-    <h1>SysAdmin Projects & PowerShell Snippets</h1>
+    <h1>Teknickal's SysAdmin Projects & PowerShell Snippets</h1>
 
-    <div class="project">
-        <h2>🛠️ Project: Automated Backup Script</h2>
-        <p>This project automates backups of important directories to a network share.</p>
-        <pre><code># Backup Documents to network share
-$source = "C:\Users\YourName\Documents"
-$destination = "\\backup-server\backups\Documents"
-Copy-Item -Path $source -Destination $destination -Recurse -Force</code></pre>
-    </div>
+    <h2 class="section-title">🛠️ Projects</h2>
 
-    <div class="project">
-        <h2>🛠️ Project: User Account Audit</h2>
-        <p>Extracts a list of all user accounts and their status.</p>
-        <pre><code># Export AD user account status
-Get-ADUser -Filter * -Property Enabled | 
-    Select-Object Name, Enabled | 
-    Export-Csv -Path "C:\ADUsers.csv" -NoTypeInformation</code></pre>
-    </div>
+    <details>
+        <summary>SolNexus</summary>
+        <p>This project dubbed "SolNexus" involved many collaborators to design, engineer, and build a practical and cost effective solution for enabling high speed internet access at remote solar field job sites in extreme weather conditions using a Starlink satellite, Mikrotik router+PoE Switch, and Unifi U7 Outdoor WAPs.</p>
+		<p>Here are some photos and designs</p>
+    </details>
 
-    <div class="snippet">
-        <h2>⚡ PowerShell Snippet: Restart Service</h2>
-        <pre><code># Restart a service
-Restart-Service -Name "Spooler" -Force</code></pre>
-    </div>
+    <details>
+        <summary>Project #2</summary>
+        <p>Another Project</p>
+		<p>Details and photos</p>
+    </details>
 
-    <div class="snippet">
-        <h2>⚡ PowerShell Snippet: Check Disk Space</h2>
-        <pre><code># Check free space on C: drive
-Get-PSDrive C | Select-Object Used, Free</code></pre>
-    </div>
+<h2 class="section-title">⚡ PowerShell Snippets - Some Useful Powershell Commands I've written or collected over the years.</h2>
+<details>
+	<summary>Exchange Online Tips and Tricks</summary>
+	<p> To connect to Microsoft Office 365 Exchange Online powershell interface we must first run Powershell as administrator and install and import the modules.</p>
+    <div class="code-block">
+            <button class="copy-button">Copy</button>
+	<pre><code>Install-Module ExchangeOnlineManagement
+Import-Module ExchangeOnlineManagement</code></pre>
+	</div>
+
+    <details>
+        <summary>Add full access permissions without mapping</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>Add-MailboxPermission -Identity "username of person you want to get permissions from" -User "username of person you want to give permissions to" -AccessRights FullAccess -InheritanceType All -AutoMapping $false</code></pre>
+		</div>
+		<p> Example: I want to give Nick full access to Devin's exchange mailbox.</p>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>Add-MailboxPermission -Identity devintownsend -User nick -AccessRights FullAccess -InheritanceType All -AutoMapping $false</code></pre>
+		</div>
+    </details>
+	
+	<details>
+        <summary>Next Snippet</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>The code</code></pre>
+		</div>
+		<p> Example: (Explanation)</p>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>code example</code></pre>
+		</div>
+	</details>
+	<details>
+        <summary>Next Snippet</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>The code</code></pre>
+		</div>
+		<p> Example: (Explanation)</p>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>code example</code></pre>
+		</div>
+	</details>
+	<details>
+        <summary>Next Snippet</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>The code</code></pre>
+		</div>
+		<p> Example: (Explanation)</p>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>code example</code></pre>
+		</div>
+	</details>
+	<details>
+        <summary>Next Snippet</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>The code</code></pre>
+		</div>
+		<p> Example: (Explanation)</p>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>code example</code></pre>
+		</div>
+	</details>
+	<details>
+        <summary>Next Snippet</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>The code</code></pre>
+		</div>
+		<p> Example: (Explanation)</p>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>code example</code></pre>
+		</div>
+	</details>
+	<details>
+        <summary>Next Snippet</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>The code</code></pre>
+		</div>
+		<p> Example: (Explanation)</p>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>code example</code></pre>
+		</div>
+	</details>
+
+</details>
+
+<details>
+    <summary>Windows 10/11 Tips and Tricks</summary>
+    <details>
+        <summary>List drive letters</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>wmic logicaldisk get name</code></pre>
+		</div>
+    </details>
+</details>
+
+    <script>
+        document.querySelectorAll('.copy-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const code = button.nextElementSibling.textContent;
+                navigator.clipboard.writeText(code).then(() => {
+                    button.textContent = 'Copied!';
+                    setTimeout(() => button.textContent = 'Copy', 1500);
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
