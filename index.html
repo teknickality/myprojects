@@ -95,7 +95,8 @@
     <div class="code-block">
             <button class="copy-button">Copy</button>
 	<pre><code>Install-Module ExchangeOnlineManagement
-Import-Module ExchangeOnlineManagement</code></pre>
+Import-Module ExchangeOnlineManagement
+Connect-ExchangeOnline</code></pre>
 	</div>
 
     <details>
@@ -112,75 +113,90 @@ Import-Module ExchangeOnlineManagement</code></pre>
     </details>
 	
 	<details>
-        <summary>Next Snippet</summary>
+        <summary>Add full access permissions with mapping</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>The code</code></pre>
+        <pre><code>Add-MailboxPermission -Identity "username of person you want to get permissions from" -User "username of person you want to give permissions to" -AccessRights FullAccess -InheritanceType All -AutoMapping $true</code></pre>
 		</div>
-		<p> Example: (Explanation)</p>
+		<p> Example: I want to give Nick full access to Maynard's exchange mailbox, and have it appear in the Outlook mailbox listing automatically (In Outlook "Classic" at least!)</p>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code example</code></pre>
-		</div>
-	</details>
-	<details>
-        <summary>Next Snippet</summary>
-		<div class="code-block">
-            <button class="copy-button">Copy</button>
-        <pre><code>The code</code></pre>
-		</div>
-		<p> Example: (Explanation)</p>
-		<div class="code-block">
-            <button class="copy-button">Copy</button>
-        <pre><code>code example</code></pre>
+        <pre><code>Add-MailboxPermission -Identity mjkeenan -User nick -AccessRights FullAccess -InheritanceType All -AutoMapping $true</code></pre>
 		</div>
 	</details>
 	<details>
-        <summary>Next Snippet</summary>
+        <summary>Add access to another user's calendar</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>The code</code></pre>
+        <pre><code>Add-MailboxFolderPermission "username of person you want to get permissions from":\calendar -User "username of perosn you want to give permissions to" -AccessRights Editor -SharingPermissionFlags None</code></pre>
 		</div>
-		<p> Example: (Explanation)</p>
+		<p> Example: I want to give Nick full editor permissions to Mikael's calendar</p>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code example</code></pre>
-		</div>
-	</details>
-	<details>
-        <summary>Next Snippet</summary>
-		<div class="code-block">
-            <button class="copy-button">Copy</button>
-        <pre><code>The code</code></pre>
-		</div>
-		<p> Example: (Explanation)</p>
-		<div class="code-block">
-            <button class="copy-button">Copy</button>
-        <pre><code>code example</code></pre>
+        <pre><code>Add-MailboxFolderPermission makerfeldt:\calendar -User nick -AccessRights Editor -SharingPermissionFlags None</code></pre>
 		</div>
 	</details>
 	<details>
-        <summary>Next Snippet</summary>
+        <summary>Breakdown of mailbox folder sizes</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>The code</code></pre>
+        <pre><code>Get-MailboxFolderStatistics "username" | Select Name,FolderSize,ItemsinFolder</code></pre>
 		</div>
-		<p> Example: (Explanation)</p>
+		<p> Example: I want to see what folders are taking up space in Bruce's Mailbox</p>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code example</code></pre>
+        <pre><code>Get-MailboxFolderStatistics bdickenson | Select Name,FolderSize,ItemsinFolder</code></pre>
 		</div>
 	</details>
 	<details>
-        <summary>Next Snippet</summary>
+        <summary>Wider view of mailbox folder sizes</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
         <pre><code>The code</code></pre>
 		</div>
-		<p> Example: (Explanation)</p>
+		<p> Example: I want to see a more detailed view of the folders and sizes for James' mailbox</p>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code example</code></pre>
+        <pre><code>Get-MailboxFolderStatistics jlabrie -FolderScope Inbox | Select Name,FolderandSubFolderSize,ItemsinFolderandSubfolders</code></pre>
+		</div>
+	</details>
+	<details>
+        <summary>Get the current size and the total number of items in folders and subfolders in the Recoverable Items folder</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>Get-MailboxFolderStatistics "username" -FolderScope RecoverableItems | FL Name,FolderAndSubfolderSize,ItemsInFolderAndSubfolders</code></pre>
+		</div>
+		<p> Example: Geddy emptied his deleted items but doesn't remember when, we want to see how much is recoverable. </p>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>Get-MailboxFolderStatistics glee -FolderScope RecoverableItems | FL Name,FolderAndSubfolderSize,ItemsInFolderAndSubfolders</code></pre>
+		</div>
+	</details>
+	<details>
+        <summary>Purge deleted items (On-premise Exchange Only)</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>Search-Mailbox -Identity "username" -SearchDumpsterOnly -TargetMailbox "Discovery Search Mailbox" -TargetFolder "username-RecoverableItems" -DeleteContent</code></pre>
+		</div>
+		<p> Example: Perhaps useful for an on-premise exchange scenario, where we're getting ready to migrate Dave's mailbox to 365. They've emptied deleted items already but we want to purge the deleted items to speed up the transfer, or the mailbox is over the 50GB limit.</p>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>Search-Mailbox -Identity dmustaine -SearchDumpsterOnly -TargetMailbox "Discovery Search Mailbox" -TargetFolder "dmustaine-RecoverableItems" -DeleteContent</code></pre>
+		</div>
+	</details>
+	<details>
+        <summary>Allow or Disallow conflicts on a room calendar</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>Set-CalendarProcessing -Identity "Calendar/Resource Name" -AllowConflicts $true/$false</code></pre>
+		</div>
+		<p> Example: For some reason you want to allow multiple people to book the main conference room at the same time. Or for some reason, someone has done this and you want to undo it.</p>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>Set-CalendarProcessing -Identity "Main Conference Room" -AllowConflicts $true</code></pre>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>Set-CalendarProcessing -Identity "Main Conference Room" -AllowConflicts $false</code></pre>
 		</div>
 	</details>
 
@@ -193,6 +209,38 @@ Import-Module ExchangeOnlineManagement</code></pre>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
         <pre><code>wmic logicaldisk get name</code></pre>
+		</div>
+    </details>
+    <summary>Next Tip</summary>
+    <details>
+        <summary>description</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>code</code></pre>
+		</div>
+    </details>
+	    <summary>Next Tip</summary>
+    <details>
+        <summary>description</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>code</code></pre>
+		</div>
+    </details>
+	    <summary>Next Tip</summary>
+    <details>
+        <summary>description</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>code</code></pre>
+		</div>
+    </details>
+	    <summary>Next Tip</summary>
+    <details>
+		<summary>description</summary>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>code</code></pre>
 		</div>
     </details>
 </details>
