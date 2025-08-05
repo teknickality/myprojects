@@ -75,21 +75,21 @@
     <h1>Teknickal's SysAdmin Projects & PowerShell Snippets</h1>
 	<p>A work-in-progress portfolio highlighting my technical skills, projects, and passions—more coming soon. It is hosted on GitHub pages using my own custom domain name.
 	<br>I'm not a programmer or webdev by any means, just a humble SysAdmin. I wrote some of the HTML for this site by hand but a lot of the formatting and structure was made possible with the help of ChatGPT.
-	<br>When used responsibly, AI tools like ChatGPT can supplement and augment our technical skills—not replace them.</p>
-	<p>(last update 6/24/2025)</p> 
+	<br>When used responsibly, AI tools like ChatGPT can supplement and augment our technical skills—-not replace them.</p>
+	<p>(last update 8/6/2025)</p> 
 
     <h2 class="section-title">🛠️ Projects</h2>
 
     <details>
         <summary>SolNexus</summary>
         <p>This project dubbed "SolNexus" involved many collaborators to design, engineer, and build a practical and cost effective solution for enabling high speed internet access at remote solar field job sites in extreme weather conditions using a Starlink satellite, Mikrotik router+PoE Switch, and Unifi U7 Outdoor WAPs.</p>
-		<p>Here are some photos and designs</p>
+		<p>Will add some photos and details soon!</p>
     </details>
 
     <details>
-        <summary>Project #2</summary>
-        <p>Another Project</p>
-		<p>Details and photos</p>
+        <summary>DataVault</summary>
+        <p>This project converts a standard tool vault into a mobile remote workstation. Provided with 5G antenna and router, laptop docking station, and large format screen to enable foremen in urban remote sites to access their resources at the job site where cellular service may be weak.</p>
+		<p>Will add some photos and details soon!</p>
     </details>
 
 <h2 class="section-title">⚡ PowerShell Snippets - Some Useful Powershell Commands I've written or collected over the years.</h2>
@@ -156,7 +156,7 @@ Connect-ExchangeOnline</code></pre>
         <summary>Wider view of mailbox folder sizes</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>The code</code></pre>
+        <pre><code>Get-MailboxFolderStatistics "username" -FolderScope Inbox | Select Name,FolderandSubFolderSize,ItemsinFolderandSubfolders</code></pre>
 		</div>
 		<p> Example: I want to see a more detailed view of the folders and sizes for James' mailbox</p>
 		<div class="code-block">
@@ -217,31 +217,33 @@ Connect-ExchangeOnline</code></pre>
 		</div>
     </details>
     <details>
-        <summary>description</summary>
+        <summary>General repair for a windows install on a different drive, (replace X with drive letter, usually C if in Startup Repair)</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
+        <pre><code>sfc /scannow /offbootdir=c:\ /offwindir=c:\windows</code></pre>
 		</div>
     </details>
     <details>
-        <summary>description</summary>
+        <summary>General repair for a windows install on a different drive, (replace X with drive letter, usually C if in Startup Repair)</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
+        <pre><code>dism /image:X:\ /cleanup-image /restorehealth</code></pre>
 		</div>
     </details>
     <details>
-        <summary>description</summary>
+        <summary>Revert pending windows updates preventing startup (9/10 times this fixes the spinny wheel of startup death!)</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
+        <pre><code>dism.exe /image:C:\ /cleanup-image /revertpendingactions</code></pre>
 		</div>
     </details>
     <details>
-		<summary>description</summary>
+		<summary>Disable "modern standby" and revert to standard S3 sleep (doesn't work on a lot of newer laptops that only support modern standby 🤬)</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
+        <pre><code>reg add HKLM\System\CurrentControlSet\Control\Power /v PlatformAoAcOverride /t REG_DWORD /d 0</code></pre>
+		            <button class="copy-button">Copy</button>
+        <pre><code>powercfg -h off</code></pre>
 		</div>
     </details>
 </details>
@@ -249,71 +251,68 @@ Connect-ExchangeOnline</code></pre>
 <details>
     <summary>Miscellaneous Windows Server</summary>
     <details>
-        <summary>description</summary>
+        <summary>Show when password was last changed for ALL users</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
+        <pre><code>Get-ADUser -Filter * -Properties PasswordLastSet | Sort-Object -Property PasswordLastSet | Select-Object Name, PasswordLastSet</code></pre>
 		</div>
     </details>
-    <details>
-        <summary>description</summary>
+	<details>
+        <summary>Show when password was last changed for specific user</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
+        <pre><code>Get-ADUser -identity "username" -properties passwordlastset, passwordneverexpires | sort name | ft Name, passwordlastset, Passwordneverexpire</code></pre>
 		</div>
-    </details>
-    <details>
-        <summary>description</summary>
+		<p> Example: I want to find out when Ozzy last changed his password.</p>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
+        <pre><code>Get-ADUser -identity oosbourne -properties passwordlastset, passwordneverexpires | sort name | ft Name, passwordlastset, Passwordneverexpire</code></pre>
 		</div>
-    </details>
-    <details>
-        <summary>description</summary>
-		<div class="code-block">
-            <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
-		</div>
-    </details>
-    <details>
-		<summary>description</summary>
-		<div class="code-block">
-            <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
-		</div>
-    </details>
+	</details>
 </details>
 
 <details>
     <summary>Mitel On-Premise (Legacy)</summary>
 	<p>Mitel (formerly Shortel) on-premise isn't a very common or modern PBX these days, but years ago when I needed to migrate the server portion from Windows Server 2008 up to Server 2019 and upgrade the app from Shortel to Mitel, we had all kinds of issues. The following commands helped get things back up and running smoothly.</p>
+	<p>First, open a command prompt as an admin and CD to the following directory</p>
+    <div class="code-block">
+            <button class="copy-button">Copy</button>
+	<pre><code>cd "C:\Program Files (x86)\Shoreline Communications\ShoreWare Server"</code></pre>
+	</div>
     <details>
-        <summary>description</summary>
+        <summary>Stop all services</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
+        <pre><code>quickinstall -stopall</code></pre>
 		</div>
     </details>
     <details>
-        <summary>description</summary>
+        <summary>Fix for several services like TDI not starting. This will remove entries of the existing TDI Media Driver and re-add it.</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
+        <pre><code>quickinstall -mediaout
+quickinstall -mediain</code></pre>
+		</div>
+		<p>Then, open Registry Editor to the following key:</p>
+		<p>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\ShoreTel-Media</p>
+		<p>Update the image path from the current entry to the following</p>
+		<div class="code-block">
+            <button class="copy-button">Copy</button>
+        <pre><code>\??\C:\Windows\System32\TDIMedia.sys</code></pre>
 		</div>
     </details>
     <details>
-        <summary>description</summary>
-		<div class="code-block">
-            <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
-		</div>
+        <summary>Fix for Mysql and associated services not starting</summary>
+		<p>Navigate to: C:\Program Files (x86)\Shoreline Communications\ShoreWare Server\MySQL\MySQL Server
+		<br>Edit mycdr and myconfig
+		<br>After line "log-bin=mysql" Add line:
+		<br>server-id=1
     </details>
     <details>
-		<summary>description</summary>
+        <summary>Once Youve got your issues sorted out, start all services</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
+        <pre><code>quickinstall -startall</code></pre>
 		</div>
     </details>
 </details>
@@ -321,18 +320,18 @@ Connect-ExchangeOnline</code></pre>
     <h2 class="section-title">📜 Scripts</h2>
 
     <details>
-        <summary>Script 1</summary>
+        <summary>Enroll a computer in AutoPilot semi-automatically</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
+        <pre><code>Coming Soon!</code></pre>
 		</div>
     </details>
 
     <details>
-        <summary>Script 2</summary>
+        <summary>After MDT and AutoPilot enrollment completes, re-initialize the OOBE to trigger Windows back into a Fresh Start</summary>
 		<div class="code-block">
             <button class="copy-button">Copy</button>
-        <pre><code>code</code></pre>
+        <pre><code>Coming Soon!</code></pre>
 		</div>
     </details>
 
